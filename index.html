@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vodacom Moçambique - Novos Pacotes de Internet</title>
+    <style>
+        :root {
+            --primary-color: #e60000;
+            --secondary-color: #ff5252;
+            --accent-color: #9c0000;
+            --text-color: #333;
+            --bg-color: #f9f9f9;
+            --card-bg: #ffffff;
+            --footer-bg: #222;
+            --footer-text: #eee;
+            --header-bg: #fff;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        .dark-mode {
+            --primary-color: #ff3333;
+            --secondary-color: #ff6666;
+            --accent-color: #cc0000;
+            --text-color: #f9f9f9;
+            --bg-color: #222;
+            --card-bg: #333;
+            --footer-bg: #111;
+            --footer-text: #ddd;
+            --header-bg: #1a1a1a;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        /* Header & Navigation (Flexbox) */
+        header {
+            background-color: var(--header-bg);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 40px;
+            margin-right: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .logo img:hover {
+            transform: scale(1.1);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--primary-color);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .dark-mode-toggle {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: rotate(30deg);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            height: 3px;
+            width: 100%;
+            background-color: var(--text-color);
+            transition: var(--transition);
+        }
+
+        /* Main Content (Grid Layout) */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 4rem;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 3px solid var(--primary-color);
+            width: 0;
+            animation: typing 3.5s steps(40, end) forwards, blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary-color) }
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .hero-image img:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background-color: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        /* Packages Section */
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--primary-color);
+        }
+
+        .packages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .package-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .package-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .package-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .package-name {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .package-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .package-duration {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .package-features {
+            padding: 1.5rem;
+        }
+
+        .package-features ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .package-features li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .package-features li::before {
+            content: '✓';
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 2rem;
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature h3 {
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            margin-bottom: 4rem;
+        }
+
+        .testimonial-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .testimonial:hover {
+            transform: scale(1.03);
+        }
+
+        .testimonial::before {
+            content: '"';
+            font-size: 5rem;
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            color: var(--primary-color);
+            opacity: 0.2;
+        }
+
+        .testimonial-text {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 1rem;
+        }
+
+        .author-info h4 {
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--footer-bg);
+            color: var(--footer-text);
+            padding: 3rem 0;
+            transition: var(--transition);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            padding: 0 1rem;
+        }
+
+        .footer-logo img {
+            height: 40px;
+            margin-bottom: 1rem;
+        }
+
+        .footer-column h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-column h3::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 2px;
+            background-color: var(--primary-color);
+            bottom: -5px;
+            left: 0;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--footer-text);
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--footer-text);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-5px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Media Queries */
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text {
+                order: 1;
+            }
+
+            .hero-image {
+                order: 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                gap: 1rem;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.5s ease;
+            }
+
+            .nav-container {
+                flex-wrap: wrap;
+            }
+
+            .nav-open .nav-links {
+                max-height: 300px;
+                margin-top: 1rem;
+            }
+
+            .nav-open .menu-toggle span:nth-child(1) {
+                transform: rotate(45deg) translate(5px, 5px);
+            }
+
+            .nav-open .menu-toggle span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .nav-open .menu-toggle span:nth-child(3) {
+                transform: rotate(-45deg) translate(5px, -5px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .package-card {
+                margin-bottom: 1rem;
+            }
+
+            .testimonial {
+                padding: 1.5rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <img src="./assets/Vodafone_(18).svg" alt="Vodacom Logo">
+                <h2>Vodacom <span style="color: var(--primary-color);">Moçambique</span></h2>
+            </div>
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#packages">Pacotes</a></li>
+                <li><a href="#features">Vantagens</a></li>
+                <li><a href="#testimonials">Testemunhos</a></li>
+                <li><a href="#contact">Contacto</a></li>
+            </ul>
+            <button class="dark-mode-toggle" id="darkModeToggle">☀️</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero" id="home">
+            <div class="hero-text">
+                <h1>Novos Pacotes de Internet</h1>
+                <p>Descubra os novos pacotes de internet da Vodacom Moçambique com preços incríveis e navegue sem limites. Conecte-se ao que realmente importa com a melhor rede de Moçambique.</p>
+                <a href="#packages" class="cta-button">Ver Pacotes</a>
+            </div>
+            <div class="hero-image">
+                <img src="./assets/Vodafone_(18).svg" alt="Vodacom Internet">
+            </div>
+        </section>
+
+        <section id="packages">
+            <h2 class="section-title">Novos Pacotes</h2>
+            <div class="packages">
+                <div class="package-card">
+                    <span class="package-badge">POPULAR</span>
+                    <div class="package-header">
+                        <h3 class="package-name">Básico</h3>
+                        <div class="package-price">500 MT</div>
+                        <div class="package-duration">Por mês</div>
+                    </div>
+                    <div class="package-features">
+                        <ul>
+                            <li>10GB de dados</li>
+                            <li>Velocidade de 4Mbps</li>
+                            <li>Chamadas ilimitadas para Vodacom</li>
+                            <li>100 SMS incluídos</li>
+                            <li>Acesso a Vodacom TV Básico</li>
+                        </ul>
+                        <button class="cta-button">Adquirir Agora</button>
+                    </div>
+                </div>
+
+                <div class="package-card">
+                    <span class="package-badge">MELHOR VALOR</span>
+                    <div class="package-header">
+                        <h3 class="package-name">Standard</h3>
+                        <div class="package-price">1000 MT</div>
+                        <div class="package-duration">Por mês</div>
+                    </div>
+                    <div class="package-features">
+                        <ul>
+                            <li>30GB de dados</li>
+                            <li>Velocidade de 10Mbps</li>
+                            <li>Chamadas ilimitadas para todas as redes</li>
+                            <li>500 SMS incluídos</li>
+                            <li>Acesso a Vodacom TV Premium</li>
+                        </ul>
+                        <button class="cta-button">Adquirir Agora</button>
+                    </div>
+                </div>
+
+                <div class="package-card">
+                    <div class="package-header">
+                        <h3 class="package-name">Premium</h3>
+                        <div class="package-price">2000 MT</div>
+                        <div class="package-duration">Por mês</div>
+                    </div>
+                    <div class="package-features">
+                        <ul>
+                            <li>100GB de dados</li>
+                            <li>Velocidade de 20Mbps</li>
+                            <li>Chamadas ilimitadas para todas as redes</li>
+                            <li>SMS ilimitados</li>
+                            <li>Acesso a Vodacom TV Premium Plus</li>
+                            <li>Roaming incluído em países SADC</li>
+                        </ul>
+                        <button class="cta-button">Adquirir Agora</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features">
+            <h2 class="section-title">Vantagens Vodacom</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">📶</div>
+                    <h3>Melhor Cobertura</h3>
+                    <p>A rede 4G mais abrangente de Moçambique, cobrindo todas as capitais provinciais.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Alta Velocidade</h3>
+                    <p>Navegue à velocidade da luz com nossa tecnologia de última geração.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💰</div>
+                    <h3>Melhor Preço</h3>
+                    <p>Pacotes acessíveis e com o melhor custo-benefício do mercado.</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🎁</div>
+                    <h3>Bónus Exclusivos</h3>
+                    <p>Ganhe bónus e descontos exclusivos para clientes Vodacom.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <h2 class="section-title">O Que Nossos Clientes Dizem</h2>
+            <div class="testimonial-container">
+                <div class="testimonial">
+                    <p class="testimonial-text">Desde que mudei para os novos pacotes da Vodacom, a minha experiência online melhorou significativamente. A velocidade é incrível e o preço é justo!</p>
+                    <div class="testimonial-author">
+                        <img src="./assets/african-american-man-wearing-round-glasses.jpg" alt="Carlos Matlhombe">
+                        <div class="author-info">
+                            <h4>Carlos Matlhombe</h4>
+                            <p>Maputo</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">Como empresária, preciso de internet confiável. O pacote Premium da Vodacom é perfeito para minhas necessidades e nunca me deixou na mão.</p>
+                    <div class="testimonial-author">
+                        <img src="./assets/attractive-young-woman-smiling.jpg" alt="Ana Cossa">
+                        <div class="author-info">
+                            <h4>Ana Cossa</h4>
+                            <p>Beira</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <p class="testimonial-text">Os novos pacotes são excelentes. Agora posso assistir vídeos, navegar e fazer chamadas sem preocupações. A Vodacom realmente entende as necessidades dos clientes.</p>
+                    <div class="testimonial-author">
+                        <img src="./assets/medium-shot-man-with-afro-hairstyle.jpg" alt="Paulo Machava">
+                        <div class="author-info">
+                            <h4>Paulo Machava</h4>
+                            <p>Nampula</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact">
+        <div class="footer-container">
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <img src="./assets/Vodafone_(18).svg" alt="Vodacom Logo">
+                </div>
+                <p>Conectando Moçambique ao futuro desde 2003.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">f</a>
+                    <a href="#" aria-label="Twitter">t</a>
+                    <a href="#" aria-label="Instagram">i</a>
+                    <a href="#" aria-label="LinkedIn">in</a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Navegação</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#packages">Pacotes</a></li>
+                    <li><a href="#features">Vantagens</a></li>
+                    <li><a href="#testimonials">Testemunhos</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contacte-nos</h3>
+                <ul class="footer-links">
+                    <li>Av. 25 de Setembro, Maputo</li>
+                    <li>+258 84 123 4567</li>
+                    <li>info@vodacom.co.mz</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Suporte</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Centro de Ajuda</a></li>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2025 Vodacom Moçambique. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode Toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                darkModeToggle.textContent = '🌙';
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                darkModeToggle.textContent = '☀️';
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        });
+
+        // Check for saved dark mode preference
+        if (localStorage.getItem('darkMode') === 'enabled') {
+            body.classList.add('dark-mode');
+            darkModeToggle.textContent = '🌙';
+        }
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navContainer = document.querySelector('.nav-container');
+
+        menuToggle.addEventListener('click', () => {
+            navContainer.classList.toggle('nav-open');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Close mobile menu if open
+                if (navContainer.classList.contains('nav-open')) {
+                    navContainer.classList.remove('nav-open');
+                }
+
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
